@@ -16,6 +16,8 @@ import {MatSort} from '@angular/material/sort';
 import {DeleteComponent} from "../../../dialogs/delete/delete.component";
 import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
+import {environment} from "../../../../environments/environment";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-document-reference',
@@ -38,6 +40,8 @@ export class DocumentReferenceComponent implements OnInit {
   dataSource: MatTableDataSource<DocumentReference>;
 
   @ViewChild(MatSort) sort: MatSort | undefined;
+
+    @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
   displayedColumns = [ 'created','category', 'type', 'setting', 'author', 'custodian',  'status', 'resource'];
 
@@ -79,6 +83,8 @@ export class DocumentReferenceComponent implements OnInit {
         }
       };
     };
+
+    if (this.dataSource !== undefined && this.paginator !== undefined) this.dataSource.paginator = this.paginator;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -147,4 +153,6 @@ export class DocumentReferenceComponent implements OnInit {
       }
     });
   }
+
+    protected readonly environment = environment;
 }

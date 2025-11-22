@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {FhirService} from "../../services/fhir.service";
 import {EprService} from "../../services/epr.service";
 import {IAlertConfig, TdDialogService} from "@covalent/core/dialogs";
@@ -7,6 +7,8 @@ import {BinaryComponent} from "./binary/binary.component";
 import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {DocumentReferenceCreateComponent} from "./document-reference-create/document-reference-create.component";
 import {environment} from "../../../environments/environment";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-documents',
@@ -17,6 +19,10 @@ export class DocumentsComponent implements OnInit {
   documents: DocumentReference[] = [];
   patientId: string | null = null;
   private nhsNumber: string | undefined;
+
+
+
+
   constructor( public fhirService: FhirService,
                private eprService: EprService,
                private dialogService: TdDialogService,

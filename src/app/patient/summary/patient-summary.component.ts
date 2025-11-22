@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {
     AllergyIntolerance, Condition,
     Encounter,
-    Patient, Reference, MedicationRequest, DiagnosticReport, Immunization, Procedure, ServiceRequest,
+    Patient, Reference, MedicationRequest, DiagnosticReport, Immunization, Procedure, ServiceRequest, DocumentReference,
 } from 'fhir/r4';
 import {FhirService} from '../../services/fhir.service';
 import {EprService} from '../../services/epr.service';
@@ -44,6 +44,7 @@ export class PatientSummaryComponent implements OnInit {
     requests: ServiceRequest[] = [];
     immunisations: Immunization[] = [];
     procedures: Procedure[] = [];
+    documents: DocumentReference[] = [];
 
     loadingMode = LoadingMode;
     loadingStrategy = LoadingStrategy;
@@ -233,6 +234,15 @@ export class PatientSummaryComponent implements OnInit {
               }
           }
       });
+      this.documents = [];
+      this.fhirService.get('/DocumentReference?patient=' + this.patientId + '&_count=50&_sort=-date').subscribe(bundle => {
+              if (bundle.entry !== undefined) {
+                  for (const entry of bundle.entry) {
+                      if (entry.resource !== undefined && entry.resource.resourceType === 'DocumentReference') { this.documents.push(entry.resource as DocumentReference); }
+                  }
+              }
+          }
+      );
 
       this.procedures = [];
       this.fhirService.get('/Procedure?patient=' + this.patientId + '&_count=50&_sort=-date').subscribe(bundle => {
