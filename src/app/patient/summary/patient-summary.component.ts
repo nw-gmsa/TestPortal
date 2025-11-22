@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {
     AllergyIntolerance, Condition,
     Encounter,
-    Patient, Reference, MedicationRequest, DiagnosticReport, Immunization, Procedure,
+    Patient, Reference, MedicationRequest, DiagnosticReport, Immunization, Procedure, ServiceRequest,
 } from 'fhir/r4';
 import {FhirService} from '../../services/fhir.service';
 import {EprService} from '../../services/epr.service';
@@ -41,6 +41,7 @@ export class PatientSummaryComponent implements OnInit {
     // @ts-ignore
   conditions: Condition[] = [];
   results: DiagnosticReport[] = [];
+    requests: ServiceRequest[] = [];
     immunisations: Immunization[] = [];
     procedures: Procedure[] = [];
 
@@ -177,6 +178,7 @@ export class PatientSummaryComponent implements OnInit {
             }
           }
       );
+      /*
       this.allergies = [];
       this.fhirService.get('/AllergyIntolerance?patient=' + this.patientId).subscribe(bundle => {
           this._loadingService.resolve('overlayStarSyntax');
@@ -186,7 +188,8 @@ export class PatientSummaryComponent implements OnInit {
               }
             }
           }
-      );
+      );*/
+      /*
       this.medicationRequests = [];
       this.fhirService.get('/MedicationRequest?patient=' + this.patientId).subscribe(bundle => {
           this._loadingService.resolve('overlayStarSyntax');
@@ -197,6 +200,8 @@ export class PatientSummaryComponent implements OnInit {
             }
           }
       );
+
+       */
       this.encounters = [];
       this.fhirService.get('/Encounter?patient=' + this.patientId + '&_count=5&_sort=-date').subscribe(bundle => {
           this._loadingService.resolve('overlayStarSyntax');
@@ -218,6 +223,17 @@ export class PatientSummaryComponent implements OnInit {
               }
           }
       );
+
+      this.requests = [];
+      this.fhirService.getTIE('/ServiceRequest?patient=' + this.patientId + '').subscribe(bundle => {
+          this._loadingService.resolve('overlayStarSyntax');
+          if (bundle.entry !== undefined) {
+              for (const entry of bundle.entry) {
+                  if (entry.resource !== undefined && entry.resource.resourceType === 'ServiceRequest') { this.requests.push(entry.resource as ServiceRequest); }
+              }
+          }
+      });
+
       this.procedures = [];
       this.fhirService.get('/Procedure?patient=' + this.patientId + '&_count=50&_sort=-date').subscribe(bundle => {
               if (bundle.entry !== undefined) {
@@ -229,6 +245,7 @@ export class PatientSummaryComponent implements OnInit {
               }
           }
       );
+      /*
       this.immunisations = [];
       this.fhirService.get('/Immunization?patient=' + this.patientId ).subscribe(bundle => {
               if (bundle.entry !== undefined) {
@@ -239,7 +256,7 @@ export class PatientSummaryComponent implements OnInit {
                   }
               }
           }
-      );
+      );*/
 
       this.fhirService.getResource('/Patient/' + this.patientId)
           .subscribe(resource => {

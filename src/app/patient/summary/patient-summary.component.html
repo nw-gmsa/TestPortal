@@ -10,6 +10,7 @@
             <td-breadcrumb>Summary Record</td-breadcrumb>
         </td-breadcrumbs>
         </mat-card-content>
+        <!--
         <mat-expansion-panel expanded="true" [togglePosition]="'before'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -23,6 +24,9 @@
              No encounters found.
          </span>
         </mat-expansion-panel>
+        -->
+
+        <!--
         <mat-expansion-panel expanded="true" [togglePosition]="'before'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -36,6 +40,9 @@
                  No problems found.
              </span>
         </mat-expansion-panel>
+        -->
+
+        <!--
         <mat-expansion-panel expanded="true" [togglePosition]="'before'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -49,6 +56,7 @@
              No allergies found.
          </span>
         </mat-expansion-panel>
+        -->
         <mat-expansion-panel expanded="true" [togglePosition]="'before'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -62,6 +70,7 @@
                  No results found.
                 </span>
         </mat-expansion-panel>
+        <!--
         <mat-expansion-panel expanded="true" [togglePosition]="'before'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -80,6 +89,9 @@
                  No medications found.
              </span>
         </mat-expansion-panel>
+        -->
+
+        <!--
         <mat-expansion-panel expanded="true" [togglePosition]="'before'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -92,6 +104,21 @@
             <span *ngIf="immunisations.length==0">
                  No immunisations found.
                 </span>
+        </mat-expansion-panel>
+        -->
+
+        <mat-expansion-panel expanded="true" [togglePosition]="'before'">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h3>Referrals and Interventions</h3>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <span *ngIf="requests.length>0">
+                      <app-referral-request [referrals]="requests"> </app-referral-request>
+                       </span>
+            <span *ngIf="requests.length==0">
+                       No results found.
+                   </span>
         </mat-expansion-panel>
 
         <mat-expansion-panel expanded="true" [togglePosition]="'before'">
@@ -107,98 +134,7 @@
                  No procedures found.
                 </span>
         </mat-expansion-panel>
-     <!--  <mat-card>  <mat-card-content>
-            <div>
-                <h3>Allergies</h3>
-                <span flex></span>
-            </div>
-            <span *ngIf="allergies.length>0">
-                <app-allergy-intolerance [allergies]="allergies"> </app-allergy-intolerance>
-             </span>
-            <span *ngIf="allergies.length==0">
-             No allergies found.
-         </span>
-        </mat-card-content>
-        <mat-card-content>
-            <div>
-                <h3>Problems</h3>
-                <span flex></span>
-            </div>
-             <span *ngIf="conditions.length>0">
-                <app-condition [conditions]="conditions"> </app-condition>
-             </span>
-             <span *ngIf="conditions.length==0">
-                 No problems found.
-             </span>
-        </mat-card-content>
-        <mat-card-content>
-             <div>
-               <h3>Medications</h3>
-               <span flex></span>
-             </div>
-            <span *ngIf="environment.addDataSupport">
-                <div *ngIf="nhsNumber !== undefined" class="list-horizontal">
-                        <button mat-stroked-button color="accent"  (click)="addMedication()">Add Medication Request</button>
-                </div>
-            </span>
-             <span *ngIf="medicationRequests.length>0">
-               <app-medication-request [medicationRequests]="medicationRequests"> </app-medication-request>
-                 </span>
-             <span *ngIf="medicationRequests.length==0">
-                 No medications found.
-             </span>
-        </mat-card-content>
-        <mat-card-content>
-            <div>
-                <h3>Vaccinations</h3>
-                <span flex></span>
-                <span *ngIf="immunisations.length>0">
-                    <app-immunisation [immunisations]="immunisations"  > </app-immunisation>
-                 </span>
-                <span *ngIf="immunisations.length==0">
-                 No immunisations found.
-                </span>
-            </div>
-        </mat-card-content>
-        <mat-card-content>
-            <div>
-                <h3>Results</h3>
-                <span flex></span>
-                <span *ngIf="results.length>0">
-                    <app-diagnostic-report [diagnosticReports]="results" > </app-diagnostic-report>
-                 </span>
-                <span *ngIf="results.length==0">
-                 No results found.
-                </span>
-            </div>
-        </mat-card-content>
-        <mat-card-content>
-            <div>
-                <h3>Procedures</h3>
-                <span flex></span>
-                <span *ngIf="procedures.length>0">
-                    <app-procedure [procedures]="procedures" > </app-procedure>
-                 </span>
-                <span *ngIf="procedures.length==0">
-                 No procedures found.
-                </span>
-            </div>
-        </mat-card-content>
-       <mat-card-content>
-         <div>
-           <h3>Last 5 Visits/Encounter</h3>
-           <span flex></span>
 
-         </div>
-         <span *ngIf="encounters.length>0">
-            <app-encounter [encounters]="encounters"> </app-encounter>
-             </span>
-         <span *ngIf="encounters.length==0">
-             No encounters found.
-         </span>
-       </mat-card-content>
-       </mat-card>
-       -->
 
     </div>
 </mat-card>
