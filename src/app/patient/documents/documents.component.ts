@@ -71,7 +71,7 @@ export class DocumentsComponent implements OnInit {
     if (document.content !== undefined && document.content.length > 0 && document.content[0].attachment !== undefined
         && document.content[0].attachment.url !== undefined) {
 
-      this.fhirService.getBinary(document.content[0].attachment.url).subscribe(result => {
+      this.fhirService.getBinary(environment.fhirServer + document.content[0].attachment.url).subscribe(result => {
 
         const dialogConfig = new MatDialogConfig();
 

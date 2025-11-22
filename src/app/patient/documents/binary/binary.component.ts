@@ -79,7 +79,7 @@ export class BinaryComponent implements OnInit {
             if (documentReference.content !== undefined && documentReference.content.length > 0 && documentReference.content[0].attachment !== undefined
                 && documentReference.content[0].attachment.url !== undefined) {
 
-              this.fhirService.getBinary(documentReference.content[0].attachment.url).subscribe(result => {
+              this.fhirService.getBinary("fhir/r4/"+documentReference.content[0].attachment.url).subscribe(result => {
                 this.binary = result;
                 this.processBinary();
               })
@@ -89,7 +89,8 @@ export class BinaryComponent implements OnInit {
     );
   }
   processBinary() {
-    if (this.binary !== undefined && this.document !== undefined) {
+    console.log('processBinary')
+      if (this.binary !== undefined && this.document !== undefined) {
       if (this.binary.contentType === 'application/fhir+xml'
           || this.binary.contentType === 'text/xml'
           || this.binary.contentType === 'text/plain'
@@ -148,7 +149,21 @@ export class BinaryComponent implements OnInit {
           }
         //this.docType = 'fhir';
       } else if (this.binary.contentType === 'application/pdf') {
-        if (this.document.content[0].attachment.url !== undefined) this.pdfSrc = this.document.content[0].attachment.url;
+          console.log('Is PDF')
+          if (typeof this.binary.data === "string") {
+              const byteCharacters = atob(this.binary.data);
+              const byteNumbers = new Array(byteCharacters.length);
+              for (let i = 0; i < byteCharacters.length; i++) {
+                  byteNumbers[i] = byteCharacters.charCodeAt(i);
+              }
+              const byteArray = new Uint8Array(byteNumbers);
+              const blob = new Blob([byteArray], {type: this.binary.contentType});
+              console.log(this.binary.contentType)
+              const blobUrl = URL.createObjectURL(blob);
+              this.pdfSrc = blobUrl
+          }
+
+       // if (this.document.content[0].attachment.url !== undefined) this.pdfSrc = blob
         this.docType = 'pdf';
         this.isLoaded = true;
       }
