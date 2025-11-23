@@ -1,5 +1,5 @@
 {
-  "name": "fhir-r4-demonstration",
+  "name": "TestPortal",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

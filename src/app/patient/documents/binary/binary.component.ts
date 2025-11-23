@@ -50,6 +50,8 @@ export class BinaryComponent implements OnInit {
     this.page--;
   }
   afterLoadComplete(pdfData: any) {
+    console.log('PDF loaded');
+    console.log(pdfData.numPages);
     this.totalPages = pdfData.numPages;
     this.isLoaded = true;
   }
@@ -151,6 +153,8 @@ export class BinaryComponent implements OnInit {
       } else if (this.binary.contentType === 'application/pdf') {
           console.log('Is PDF')
           if (typeof this.binary.data === "string") {
+              const blob = this.base64toBlob(this.binary.data, this.binary.contentType);
+              /*
               const byteCharacters = atob(this.binary.data);
               const byteNumbers = new Array(byteCharacters.length);
               for (let i = 0; i < byteCharacters.length; i++) {
@@ -158,9 +162,13 @@ export class BinaryComponent implements OnInit {
               }
               const byteArray = new Uint8Array(byteNumbers);
               const blob = new Blob([byteArray], {type: this.binary.contentType});
+
               console.log(this.binary.contentType)
+               */
               const blobUrl = URL.createObjectURL(blob);
+              //window.open(blobUrl, '_blank');
               this.pdfSrc = blobUrl
+              console.log(this.pdfSrc)
           }
 
        // if (this.document.content[0].attachment.url !== undefined) this.pdfSrc = blob
@@ -209,6 +217,27 @@ export class BinaryComponent implements OnInit {
     }
     return undefined
   }
+
+    private base64toBlob(base64Data: string, contentType: string): Blob {
+        contentType = contentType || '';
+        const sliceSize = 1024;
+        const byteCharacters = atob(base64Data);
+        const bytesLength = byteCharacters.length;
+        const slicesCount = Math.ceil(bytesLength / sliceSize);
+        const byteArrays = new Array(slicesCount);
+
+        for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+            const begin = sliceIndex * sliceSize;
+            const end = Math.min(begin + sliceSize, bytesLength);
+
+            const bytes = new Array(end - begin);
+            for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
+                bytes[i] = byteCharacters[offset].charCodeAt(0);
+            }
+            byteArrays[sliceIndex] = new Uint8Array(bytes);
+        }
+        return new Blob(byteArrays, { type: contentType });
+    }
 
   protected readonly JSON = JSON;
 
