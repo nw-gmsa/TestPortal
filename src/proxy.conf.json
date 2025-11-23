@@ -3,5 +3,10 @@
     "target": "http://192.168.1.67/csp/healthshare/cdr",
     "secure": false,
     "changeOrigin": true
+  },
+  "/TestPortal/fhir": {
+    "target": "http://192.168.1.67/csp/healthshare/cdr",
+    "secure": false,
+    "changeOrigin": true
   }
 }
