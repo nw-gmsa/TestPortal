@@ -58,7 +58,7 @@ export class ObservationChartComponent implements OnInit {
   observations: Observation[] = [];
   maxScale: any;
   minScale: any;
-  selectedValue: number = 120;
+  selectedValue: number = 264;
   @Input()
   startDate: Moment = moment(new Date());
   @Input()
@@ -91,9 +91,11 @@ export class ObservationChartComponent implements OnInit {
   }
 
   refreshResult(): void {
-    const end = this.endDate;
+      const end = this.endDate;
     const from = this.startDate
-    this.maxScale = end.toDate();
+    console.log(from)
+      console.log(end)
+      this.maxScale = end.toDate();
     this.minScale = from.toDate();
     this.observations = [];
 
@@ -102,7 +104,8 @@ export class ObservationChartComponent implements OnInit {
       this.fhirService.get('/Observation?patient=' + this.patentId + '&code=' + this.observationCode
           + '&date=gt' + this.dlgSrv.getFHIRDateString(from.toDate()).split('T')[0]
           + '&date=lt' + this.dlgSrv.getFHIRDateString(end.toDate()).split('T')[0]
-          + '&_count=400').subscribe(
+          + '&_count=400'
+            + '&_sort=-date').subscribe(
           bundle => {
             //   console.log(bundle);
             const observations: Bundle = bundle as Bundle;
