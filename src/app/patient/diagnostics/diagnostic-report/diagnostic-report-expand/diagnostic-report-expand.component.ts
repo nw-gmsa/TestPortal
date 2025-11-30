@@ -30,7 +30,7 @@ export class DiagnosticReportExpandComponent implements OnInit {
                 .subscribe(resource => {
                     if (resource.resourceType === 'Observation') {
                       obs.push(resource as Observation);
-                      console.log(resource)
+                    //  console.log(resource)
                     }
                     if (this.diagnosticReport?.result?.length == obs.length) {
                       this.observations = obs;
